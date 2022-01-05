@@ -37,8 +37,10 @@ public class BasicBoard extends AbstractBoard {
             {13,14,15,16},
             {4,3,2,1}
     };
+    private static final int width = 13;
+    private static final int height = 17;
     
-    public BasicBoard(int width, int height) {
+    public BasicBoard() {
         super(width, height);
         this.init();
     }

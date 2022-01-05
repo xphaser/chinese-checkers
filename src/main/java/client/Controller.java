@@ -1,5 +1,7 @@
 package client;
 
+import java.io.IOException;
+
 import client.game.BasicBoard;
 import client.game.Piece;
 import javafx.fxml.FXML;
@@ -8,14 +10,26 @@ import javafx.scene.paint.Color;
 
 public class Controller {
     private BasicBoard board;
+    private Client client;
+    private Piece selectedPiece;
     
     @FXML
     private BorderPane pane;
     @FXML
     public void initialize() {
-        board = new BasicBoard(13, 17);
-        pane.setCenter(board);
+        client = new Client();
         
+        new Thread(() -> {
+            try {
+                client.connect(Constants.SERVER_HOST, Constants.SERVER_PORT);
+                client.run();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        
+        board = new BasicBoard();
+        pane.setCenter(board);
         this.drawBoard();
     }
     
@@ -25,7 +39,7 @@ public class Controller {
             
             for(int j=0; j<board.getWidth(); j++) {
                 double posX = j*40 + 40;
-                if(i%2==1) {
+                if(i%2 == 1) {
                     posX += 20;
                 }
                 System.out.println(board.getHeight());
@@ -35,11 +49,7 @@ public class Controller {
                 piece.setCenterX(posX);
                 piece.setCenterY(posY);
                 piece.setRadius(17);
-                piece.setOnMouseClicked(e -> {
-                    if(piece.getState() != -1) {
-                        System.out.println("X: " + piece.getX() + ", Y: " + piece.getY());
-                    }
-                });
+                piece.setOnMouseClicked(e -> pieceClicked(piece));
                 
                 switch(piece.getState()) {
                     case 0:
@@ -68,6 +78,25 @@ public class Controller {
                 }
                 board.getChildren().add(piece);
             }
+        }
+    }
+    
+    private void pieceClicked(Piece piece) {
+        if(piece.getState() > 0) {
+            if(!piece.isSelected()) {
+                if(selectedPiece != null) {
+                    selectedPiece.setSelected(false);
+                }
+                piece.setSelected(true);    
+                selectedPiece = piece;
+            }
+            else {
+                piece.setSelected(false);
+                selectedPiece = null;
+            }
+        }
+        else if(piece.getState() == 0 && selectedPiece!=null) {
+            client.post("MOVE " + selectedPiece.getX() + " " + selectedPiece.getY() + " " + piece.getX() + " " + piece.getY());
         }
     }
 }

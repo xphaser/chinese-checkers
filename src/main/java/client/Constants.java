@@ -6,6 +6,8 @@ import javafx.scene.paint.RadialGradient;
 import javafx.scene.paint.Stop;
 
 public class Constants {
+    public static final String SERVER_HOST = "localhost";
+    public static final int SERVER_PORT = 3000;
     public static final RadialGradient COLOR_WHITE = new RadialGradient(-135, 0.5, 0.5, 0.5, 0.5, true, CycleMethod.NO_CYCLE, new Stop(0, Color.WHITE), new Stop(1, Color.DARKGREY));
     public static final RadialGradient COLOR_RED = new RadialGradient(-135, 0.5, 0.5, 0.5, 0.5, true, CycleMethod.NO_CYCLE, new Stop(0, Color.WHITE), new Stop(1, Color.RED));
     public static final RadialGradient COLOR_YELLOW = new RadialGradient(-135, 0.5, 0.5, 0.5, 0.5, true, CycleMethod.NO_CYCLE, new Stop(0, Color.WHITE), new Stop(1, Color.GOLD));
