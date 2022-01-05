@@ -19,7 +19,6 @@ public class Client {
     }
     
     public void run() {
-        post("TEST");
         String res;
         while(true) {
             try {

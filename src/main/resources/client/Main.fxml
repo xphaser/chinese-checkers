@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import java.net.URL?>
+
+<BorderPane fx:id="pane" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.Controller">
+	<!-- TODO Add Nodes -->
+	<center></center>
+	<right></right>
+	
+	<stylesheets>
+		<URL value="@Main.css"/>
+	</stylesheets>
+</BorderPane>
+
