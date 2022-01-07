@@ -1,4 +1,4 @@
-package client.game;
+package model;
 
 import javafx.scene.Group;
 

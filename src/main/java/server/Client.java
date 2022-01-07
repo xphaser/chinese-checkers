@@ -6,13 +6,19 @@ import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import model.BoardController;
+
 public class Client extends Thread {
     private Socket socket;
     private Scanner in;
     private PrintWriter out;
+    private Game game;
+    private int id;
     
-    Client(Socket socket) {
+    Client(Socket socket, int id, Game game) {
         this.socket = socket;
+        this.id = id;
+        this.game = game;
         
         try {
             in = new Scanner(socket.getInputStream());
@@ -20,6 +26,10 @@ public class Client extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public int getPlayerId() {
+        return this.id;
     }
     
     public void run() {
@@ -33,11 +43,14 @@ public class Client extends Thread {
                 continue;
             }
             
-            System.out.println("Client request: " + req);
-            
-             if(req.equals("TEST")) {
-                out.println("OK");
-            }
+            System.out.println(req);
+            if(game.handleRequest(this.id, req) == 1) {
+                send("INVALID");
+            };
         }
+    }
+    
+    public void send(String message) {
+        out.println(message);
     }
 }

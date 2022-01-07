@@ -1,4 +1,4 @@
-package client.game;
+package model;
 
 public class BasicBoard extends AbstractBoard {
     

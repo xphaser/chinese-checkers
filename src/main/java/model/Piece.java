@@ -1,4 +1,4 @@
-package client.game;
+package model;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;

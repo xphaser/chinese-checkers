@@ -7,10 +7,17 @@ import java.net.UnknownHostException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import javafx.application.Platform;
+
 public class Client {
     private Socket socket;
     private Scanner in;
     private PrintWriter out;
+    private Controller controller;
+    
+    public Client(Controller controller) {
+        this.controller = controller;
+    }
     
     public void connect(String address, int port) throws UnknownHostException, IOException {
         socket = new Socket(address, port);
@@ -28,7 +35,15 @@ public class Client {
                 continue;
             }
             
-            System.out.println("Server responded: " + res);
+            String tokens[] = res.split(" ");
+            if(tokens[0].equals("MOVE")) {
+                int oldX = Integer.parseInt(tokens[1]);
+                int oldY = Integer.parseInt(tokens[2]);
+                int newX = Integer.parseInt(tokens[3]);
+                int newY = Integer.parseInt(tokens[4]);
+                
+                Platform.runLater(() -> controller.movePiece(oldX, oldY, newX, newY));
+            }
         }
     }
     

@@ -11,9 +11,10 @@ public class Server {
         try (ServerSocket listener = new ServerSocket(port)) {
             System.out.println("Server listening on port " + port);   
   
-            while(true) {
-                new Client(listener.accept()).start();
-            }
+            new Game(2, listener);
+            //while(true) {
+            //    new Client(listener.accept()).start();
+            //}
         }
     }   
 }
