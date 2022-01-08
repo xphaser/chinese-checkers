@@ -14,6 +14,7 @@ public class Game {
     private BoardController controller;
     private List<Client> players;
     private int playersNum;
+    private int turn;
 
     Game(int playersNum, ServerSocket socket) throws IOException {
         this.playersNum = playersNum;
@@ -37,9 +38,20 @@ public class Game {
     
     private void start() {
         System.out.println("Starting");
+        this.turn = 1;
         for(Client player : players) {
             player.send("START " + player.getPlayerId());
             player.start();
+        }
+    }
+    
+    private void nextTurn() {
+        turn = turn % playersNum + 1;
+    }
+    
+    public void sendAll(String message) {
+        for(Client player: players) {
+            player.send(message);
         }
     }
     
@@ -47,6 +59,10 @@ public class Game {
         String tokens[] = req.split(" ");
 
         if(tokens[0].equals("MOVE")) {
+            if(playerId != turn) {
+                return 2;
+            }
+            
             int oldX = Integer.parseInt(tokens[1]);
             int oldY = Integer.parseInt(tokens[2]);
             int newX = Integer.parseInt(tokens[3]);
@@ -56,6 +72,7 @@ public class Game {
                 board.setPiece(oldX, oldY, 0);
                 board.setPiece(newX, newY, playerId);
                 sendAll("MOVE " + oldX + " " + oldY + " " + newX + " " + newY);
+                this.nextTurn();
                 return 0;
             }
             else {
@@ -63,12 +80,6 @@ public class Game {
             }
         }
         return 2;
-    }
-    
-    public void sendAll(String message) {
-        for(Client player: players) {
-            player.send(message);
-        }
     }
     
 }
