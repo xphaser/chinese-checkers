@@ -68,16 +68,36 @@ public class Game {
             int newX = Integer.parseInt(tokens[3]);
             int newY = Integer.parseInt(tokens[4]);
             
-            if(controller.isValid(playerId, oldX, oldY, newX, newY)) {
+            if(!controller.isValid(playerId, oldX, oldY, newX, newY)) {
+                return 1;
+            }
+            
+            if(controller.isValidMove(playerId, oldX, oldY, newX, newY)) {
                 board.setPiece(oldX, oldY, 0);
                 board.setPiece(newX, newY, playerId);
                 sendAll("MOVE " + oldX + " " + oldY + " " + newX + " " + newY);
                 this.nextTurn();
                 return 0;
             }
-            else {
-                return 1;
+            
+            if(controller.isValidJump(playerId, oldX, oldY, newX, newY)) {
+                board.setPiece(oldX, oldY, 0);
+                board.setPiece(newX, newY, playerId);
+                sendAll("MOVE " + oldX + " " + oldY + " " + newX + " " + newY);
+                
+                if(!controller.isJumpPossible(oldX, oldY, newX, newY)) {
+                    controller.isJumping(false);
+                    this.nextTurn();
+                }
+                else {
+                    controller.isJumping(true);
+                    controller.setCurrentPiece(board.getPiece(newX, newY));
+                }
+                return 0;
             }
+
+            return 1;
+            
         }
         return 2;
     }
