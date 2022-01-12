@@ -43,10 +43,8 @@ public class Client extends Thread {
                 continue;
             }
             
-            System.out.println(req);
-            if(game.handleRequest(this.id, req) == 1) {
-                send("INVALID");
-            };
+            System.out.println(this.id + ": " + req);
+            game.handleRequest(this.id, req);
         }
     }
     

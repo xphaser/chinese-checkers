@@ -3,8 +3,12 @@ package client;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.shape.Circle;
 import model.BasicBoard;
 import model.Piece;
 
@@ -12,9 +16,17 @@ public class Controller {
     private BasicBoard board;
     private Client client;
     private Piece selectedPiece;
+    private int playerId;
     
     @FXML
     private BorderPane pane;
+    @FXML
+    private Label label;
+    @FXML
+    private Button buttonSkip;
+    @FXML
+    private Circle turnPiece;
+    
     @FXML
     public void initialize() {
         client = new Client(this);
@@ -58,35 +70,39 @@ public class Controller {
     }
     
     private void drawPiece(Piece piece) {
-        switch(piece.getState()) {
-        case 0:
-            piece.setFill(Color.LIGHTGRAY);
-            break;  
-        case 1:
-            piece.setFill(Constants.COLOR_RED);
-            break;     
-        case 2:
-            piece.setFill(Constants.COLOR_YELLOW);
-            break;
-        case 3:
-            piece.setFill(Constants.COLOR_BLACK);
-            break;
-        case 4:
-            piece.setFill(Constants.COLOR_WHITE);
-            break;
-        case 5:
-            piece.setFill(Constants.COLOR_BLUE);
-            break;
-        case 6:
-            piece.setFill(Constants.COLOR_GREEN);
-            break;
-        default:
+        int id = piece.getState();
+        if(id == -1) {
             piece.setFill(Color.TRANSPARENT);
+        }
+        else if(id == 0) {
+            piece.setFill(Color.LIGHTGREY);
+        }
+        else {
+            piece.setFill(getColor(piece.getState()));
+        }
+    }
+    
+    private RadialGradient getColor(int id) throws IllegalArgumentException {
+        switch(id) {
+        case 1:
+            return Constants.COLOR_RED;
+        case 2:
+            return Constants.COLOR_YELLOW;
+        case 3:
+            return Constants.COLOR_BLACK;
+        case 4:
+            return Constants.COLOR_WHITE;
+        case 5:
+            return Constants.COLOR_BLUE;
+        case 6:
+            return Constants.COLOR_GREEN;
+        default:
+            throw new IllegalArgumentException();
         }
     }
     
     private void pieceClicked(Piece piece) {
-        if(piece.getState() > 0) {
+        if(piece.getState() == playerId) {
             if(!piece.isSelected()) {
                 if(selectedPiece != null) {
                     selectedPiece.setSelected(false);
@@ -99,8 +115,18 @@ public class Controller {
                 selectedPiece = null;
             }
         }
-        else if(piece.getState() == 0 && selectedPiece!=null) {
+        else if(piece.getState() == 0 && selectedPiece != null) {
             client.post("MOVE " + selectedPiece.getX() + " " + selectedPiece.getY() + " " + piece.getX() + " " + piece.getY());
+            selectedPiece.setSelected(false);
+            selectedPiece = null;
+        }
+    }
+   
+    @FXML
+    private void skipTurn() {
+        client.post("SKIP");
+        
+        if(selectedPiece!= null) {
             selectedPiece.setSelected(false);
             selectedPiece = null;
         }
@@ -111,5 +137,20 @@ public class Controller {
         board.setPiece(oldX, oldY, 0);
         drawPiece(board.getPiece(oldX, oldY));
         drawPiece(board.getPiece(newX, newY));
+    }
+    
+    public void start(int playerId) {
+        this.playerId = playerId;
+    }
+    
+    public void nextTurn(int playerId) {
+        if(this.playerId == playerId) {
+            label.setText("YOUR TURN");
+        }
+        else {
+            label.setText("ENEMY TURN");
+        }
+        
+        turnPiece.setFill(getColor(playerId));
     }
 }

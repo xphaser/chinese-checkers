@@ -44,6 +44,14 @@ public class Client {
                 
                 Platform.runLater(() -> controller.movePiece(oldX, oldY, newX, newY));
             }
+            else if(tokens[0].equals("START")) {
+                int playerId = Integer.parseInt(tokens[1]);
+                Platform.runLater(() -> controller.start(playerId));
+            }
+            else if(tokens[0].equals("TURN")) {
+                int playerId = Integer.parseInt(tokens[1]);
+                Platform.runLater(() -> controller.nextTurn(playerId));
+            }
         }
     }
     
