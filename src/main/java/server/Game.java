@@ -14,14 +14,18 @@ public class Game {
     private BoardController controller;
     private List<Client> players;
     private int playersNum;
-    private int turn = 0;
+    private int turn;
 
+    private final static int[][] pids = {{1, 4}, {1,3,5}, {2,3,5,6}, {}, {1,2,3,4,5,6}};
+    
     Game(int playersNum, ServerSocket socket) throws IOException {
         this.playersNum = playersNum;
         this.listener = socket;
         this.addPlayers();
         this.board = new BasicBoard();
+        this.board.init(playersNum);
         this.controller = new BoardController(board);
+        this.turn = (int)(Math.random() * playersNum);
         this.start();
     }
     
@@ -31,7 +35,9 @@ public class Game {
         
         do {
             i++;
-            players.add(new Client(listener.accept(), i, this));
+            Client player = new Client(listener.accept(), pids[playersNum-2][i-1], this);
+            players.add(player); 
+            player.send("INIT " + playersNum);
             System.out.println("Player " + i + " connected");
         } while (i < playersNum);
     }
@@ -46,8 +52,8 @@ public class Game {
     }
     
     private void nextTurn() {
-        turn = turn % playersNum + 1;
-        sendAll("TURN " + turn);
+        turn = (turn + 1) % playersNum;
+        sendAll("TURN " + pids[playersNum-2][turn]);
     }
     
     public void sendAll(String message) {
@@ -57,7 +63,7 @@ public class Game {
     }
     
     public void handleRequest(int playerId, String req) {
-        if(playerId != turn) {
+        if(playerId != pids[playersNum-2][turn]) {
             return;
         }
         

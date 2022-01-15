@@ -39,10 +39,6 @@ public class Controller {
                 e.printStackTrace();
             }
         }).start();
-        
-        board = new BasicBoard();
-        pane.setCenter(board);
-        this.drawBoard();
     }
     
     private void drawBoard() {
@@ -54,8 +50,6 @@ public class Controller {
                 if(i%2 == 1) {
                     posX += 20;
                 }
-                System.out.println(board.getHeight());
-                System.out.println(i +";" + j);
                 Piece piece = board.getPiece(j, i);
                 
                 piece.setCenterX(posX);
@@ -87,15 +81,15 @@ public class Controller {
         case 1:
             return Constants.COLOR_RED;
         case 2:
-            return Constants.COLOR_YELLOW;
-        case 3:
             return Constants.COLOR_BLACK;
-        case 4:
-            return Constants.COLOR_WHITE;
-        case 5:
+        case 3:
             return Constants.COLOR_BLUE;
-        case 6:
+        case 4:
             return Constants.COLOR_GREEN;
+        case 5:
+            return Constants.COLOR_WHITE;
+        case 6:
+            return Constants.COLOR_YELLOW;
         default:
             throw new IllegalArgumentException();
         }
@@ -130,6 +124,13 @@ public class Controller {
             selectedPiece.setSelected(false);
             selectedPiece = null;
         }
+    }
+    
+    public void initBoard(int playersNum) {
+        board = new BasicBoard();
+        pane.setCenter(board);
+        board.init(playersNum);
+        drawBoard();
     }
     
     public void movePiece(int oldX, int oldY, int newX, int newY) {

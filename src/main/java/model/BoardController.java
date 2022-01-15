@@ -159,4 +159,5 @@ public class BoardController {
     public void setCurrentPiece(Piece piece) {
         this.currentPiece = piece;
     }
+    
 }

@@ -34,9 +34,13 @@ public class Client {
             catch(NoSuchElementException e) {
                 continue;
             }
-            
+            System.out.println(res);
             String tokens[] = res.split(" ");
-            if(tokens[0].equals("MOVE")) {
+            if(tokens[0].equals("INIT")) {
+                int playersNum = Integer.parseInt(tokens[1]);
+                Platform.runLater(() -> controller.initBoard(playersNum));
+            }
+            else if(tokens[0].equals("MOVE")) {
                 int oldX = Integer.parseInt(tokens[1]);
                 int oldY = Integer.parseInt(tokens[2]);
                 int newX = Integer.parseInt(tokens[3]);

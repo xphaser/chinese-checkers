@@ -12,9 +12,6 @@ public class Server {
             System.out.println("Server listening on port " + port);   
   
             new Game(2, listener);
-            //while(true) {
-            //    new Client(listener.accept()).start();
-            //}
         }
     }   
 }
