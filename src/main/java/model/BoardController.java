@@ -141,48 +141,66 @@ public class BoardController {
     }
 
     public boolean isJumpPossible(int oldX, int oldY, int newX, int newY) {
-        if(board.getPiece(newX-2, newY).getState() == 0 && board.getPiece(newX-1, newY).getState() > 0 && !(newX-2 == oldX && newY == oldY)) {
+        if(newX-2 >= 0 
+                && board.getPiece(newX-2, newY).getState() == 0 && board.getPiece(newX-1, newY).getState() > 0
+                && !(newX-2 == oldX && newY == oldY)) 
             return true;
-        }
-        if(board.getPiece(newX+2, newY).getState() == 0 && board.getPiece(newX+1, newY).getState() > 0 && !(newX+2 == oldX && newY == oldY)) {
+        
+        if(newX+2 < board.getWidth() 
+                && board.getPiece(newX+2, newY).getState() == 0 && board.getPiece(newX+1, newY).getState() > 0 
+                && !(newX+2 == oldX && newY == oldY))
             return true;
-        }
+    
         
         if(newY % 2 == 0) {
             //top left
-            if(board.getPiece(newX-1, newY-2).getState() == 0 && board.getPiece(newX-1, newY-1).getState() > 0 && !(newX-1 == oldX && newY-2 == oldY)) {
+            if(newX-1 >= 0 && newY-2 >= 0 
+                    && board.getPiece(newX-1, newY-2).getState() == 0 && board.getPiece(newX-1, newY-1).getState() > 0
+                    && !(newX-1 == oldX && newY-2 == oldY))
                 return true;
-            }
+
             //top right
-            if(board.getPiece(newX+1, newY-2).getState() == 0 && board.getPiece(newX, newY-1).getState() > 0 && !(newX+1 == oldX && newY-2 == oldY)) {
+            if(newX+1 < board.getWidth() && newY-2 >= 0 
+                    && board.getPiece(newX+1, newY-2).getState() == 0 && board.getPiece(newX, newY-1).getState() > 0 
+                    && !(newX+1 == oldX && newY-2 == oldY)) {
                 return true;
             }
             //bottom left
-            if(board.getPiece(newX-1, newY+2).getState() == 0 && board.getPiece(newX-1, newY+1).getState() > 0 && !(newX-1 == oldX && newY+2 == oldY)) {
+            if(newX-1 >= 0 && newY+2 < board.getHeight() 
+                    && board.getPiece(newX-1, newY+2).getState() == 0 && board.getPiece(newX-1, newY+1).getState() > 0 
+                    && !(newX-1 == oldX && newY+2 == oldY))
                 return true;
-            }
+
             //bottom right
-            if(board.getPiece(newX+1, newY+2).getState() == 0 && board.getPiece(newX, newY+1).getState() > 0 && !(newX+1 == oldX && newY+2 == oldY)) {
+            if(newX+1 < board.getWidth() && newY+2 < board.getHeight() 
+                    && board.getPiece(newX+1, newY+2).getState() == 0 && board.getPiece(newX, newY+1).getState() > 0 
+                    && !(newX+1 == oldX && newY+2 == oldY))
                 return true;
-            }
         }
         else {
             //top left
-            if(board.getPiece(newX-1, newY-2).getState() == 0 && board.getPiece(newX, newY-1).getState() > 0 && !(newX-1 == oldX && newY-2 == oldY)) {
+            if(newX-1 >= 0 && newY-2 >= 0 
+                    && board.getPiece(newX-1, newY-2).getState() == 0 && board.getPiece(newX, newY-1).getState() > 0 
+                    && !(newX-1 == oldX && newY-2 == oldY))
                 return true;
-            }
+    
             //top right
-            if(board.getPiece(newX+1, newY-2).getState() == 0 && board.getPiece(newX+1, newY-1).getState() > 0 && !(newX+1 == oldX && newY-2 == oldY)) {
+            if(newX+1 < board.getHeight() && newY-2 >= 0 
+                    && board.getPiece(newX+1, newY-2).getState() == 0 && board.getPiece(newX+1, newY-1).getState() > 0 
+                    && !(newX+1 == oldX && newY-2 == oldY))
                 return true;
-            }
+            
             //bottom left
-            if(board.getPiece(newX-1, newY+2).getState() == 0 && board.getPiece(newX, newY+1).getState() > 0 && !(newX-1 == oldX && newY+2 == oldY)) {
+            if(newX-1 >= 0 && newY+2 < board.getHeight() 
+                    && board.getPiece(newX-1, newY+2).getState() == 0 && board.getPiece(newX, newY+1).getState() > 0 
+                    && !(newX-1 == oldX && newY+2 == oldY))
                 return true;
-            }
+
             //bottom right
-            if(board.getPiece(newX+1, newY+2).getState() == 0 && board.getPiece(newX+1, newY+1).getState() > 0 && !(newX+1 == oldX && newY+2 == oldY)) {
+            if(newX+1 < board.getWidth() && newY+2 < board.getHeight()
+                    && board.getPiece(newX+1, newY+2).getState() == 0 && board.getPiece(newX+1, newY+1).getState() > 0 
+                    && !(newX+1 == oldX && newY+2 == oldY))
                 return true;
-            }
         }
         
         return false;
