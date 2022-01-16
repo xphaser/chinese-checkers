@@ -69,11 +69,27 @@ public class BasicBoard extends AbstractBoard {
         }
     }
     
-    private void setPieces(int[][] data, int id) {
-        for(int i=0; i < data.length; i++) {
-            pieces[data[i][0]][data[i][1]].setState(id);
-        }
+    public int[][] getRedTriangle() {
+        return redPieces;
     }
     
+    public int[][] getBlackTriangle() {
+        return blackPieces;
+    }
+    
+    public int[][] getBlueTriangle() {
+        return bluePieces;
+    }
+    
+    public int[][] getGreenTriangle() {
+        return greenPieces;
+    }
+    
+    public int[][] getYellowTriangle() {
+        return yellowPieces;
+    }
+    
+    public int[][] getWhiteTriangle() {
+        return whitePieces;
+    }
 }
-

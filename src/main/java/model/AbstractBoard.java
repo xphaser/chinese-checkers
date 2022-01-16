@@ -25,8 +25,14 @@ public abstract class AbstractBoard extends Group {
         return pieces[x][y];
     }
     
-    public void setPiece(int x, int y, int state) {
-        pieces[x][y].setState(state);
+    public void setPiece(int x, int y, int id) {
+        pieces[x][y].setState(id);
+    }
+    
+    public void setPieces(int[][] data, int id) {
+        for(int i=0; i < data.length; i++) {
+            pieces[data[i][0]][data[i][1]].setState(id);
+        }
     }
     
     private void init() {

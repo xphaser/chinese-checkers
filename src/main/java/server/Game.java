@@ -85,10 +85,8 @@ public class Game {
                 board.setPiece(newX, newY, playerId);
                 sendAll("MOVE " + oldX + " " + oldY + " " + newX + " " + newY);
                 this.nextTurn();
-                return;
             }
-           
-            if(controller.isValidJump(playerId, oldX, oldY, newX, newY)) {
+            else if(controller.isValidJump(playerId, oldX, oldY, newX, newY)) {
                 board.setPiece(oldX, oldY, 0);
                 board.setPiece(newX, newY, playerId);
                 sendAll("MOVE " + oldX + " " + oldY + " " + newX + " " + newY);
@@ -101,6 +99,12 @@ public class Game {
                     controller.isJumping(true);
                     controller.setCurrentPiece(board.getPiece(newX, newY));
                 }
+            }
+            else return;
+            
+            int winner = controller.findWinner();
+            if(winner > 0) {
+                sendAll("WINNER " + winner);
             }
             
         }
