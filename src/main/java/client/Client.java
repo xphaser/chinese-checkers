@@ -56,6 +56,10 @@ public class Client {
                 int playerId = Integer.parseInt(tokens[1]);
                 Platform.runLater(() -> controller.nextTurn(playerId));
             }
+            else if(tokens[0].equals("WINNER")) {
+                int playerId = Integer.parseInt(tokens[1]);
+                Platform.runLater(() -> controller.showWinner(playerId));
+            }
         }
     }
     

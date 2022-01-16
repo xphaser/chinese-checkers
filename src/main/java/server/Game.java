@@ -12,21 +12,19 @@ public class Game {
     private ServerSocket listener;
     private BasicBoard board;
     private BoardController controller;
-    private List<Client> players;
+    private List<Client> players = null;
     private int playersNum;
     private int turn;
 
     private final static int[][] pids = {{1, 4}, {1,3,5}, {2,3,5,6}, {}, {1,2,3,4,5,6}};
     
-    Game(int playersNum, ServerSocket socket) throws IOException {
+    public Game(int playersNum, ServerSocket socket) throws IOException {
         this.playersNum = playersNum;
         this.listener = socket;
-        this.addPlayers();
         this.board = new BasicBoard();
         this.board.init(playersNum);
         this.controller = new BoardController(board);
         this.turn = (int)(Math.random() * playersNum);
-        this.start();
     }
     
     private void addPlayers() throws IOException {
@@ -42,7 +40,13 @@ public class Game {
         } while (i < playersNum);
     }
     
-    private void start() {
+    public void start() {
+        try {
+            this.addPlayers();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
         System.out.println("Starting");
         for(Client player : players) {
             player.send("START " + player.getPlayerId());
@@ -57,6 +61,8 @@ public class Game {
     }
     
     public void sendAll(String message) {
+        if(players == null) return;
+        
         for(Client player: players) {
             player.send(message);
         }

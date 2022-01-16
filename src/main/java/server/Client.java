@@ -15,7 +15,7 @@ public class Client extends Thread {
     private Game game;
     private int id;
     
-    Client(Socket socket, int id, Game game) {
+    public Client(Socket socket, int id, Game game) {
         this.socket = socket;
         this.id = id;
         this.game = game;

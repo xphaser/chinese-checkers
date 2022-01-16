@@ -3,6 +3,8 @@ package client;
 import java.io.IOException;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -128,7 +130,7 @@ public class Controller {
     
     public void initBoard(int playersNum) {
         board = new BasicBoard();
-        pane.setCenter(board);
+        if(pane!=null) pane.setCenter(board);
         board.init(playersNum);
         drawBoard();
     }
@@ -153,5 +155,22 @@ public class Controller {
         }
         
         turnPiece.setFill(getColor(playerId));
+    }
+    
+    public void showWinner(int playerId) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        
+        if(this.playerId == playerId) {
+            alert.setTitle("Victory!");
+            alert.setHeaderText("Victory!");
+            alert.setContentText("Congratulations! You have won!");
+        }
+        else {
+            alert.setTitle("Defeat!");
+            alert.setHeaderText("Defeat!");
+            alert.setContentText("One of your opponents has won...");
+        }
+        
+        alert.showAndWait();
     }
 }

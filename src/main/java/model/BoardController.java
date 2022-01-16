@@ -3,7 +3,7 @@ package model;
 public class BoardController {
     private BasicBoard board;
     private boolean jumping = false;
-    private Piece currentPiece;
+    private Piece currentPiece = null;
     
     public BoardController(BasicBoard board) {
         this.board = board;
@@ -74,7 +74,7 @@ public class BoardController {
                     return true;
                 }
             }
-            if(oldY % 2 == 1) { 
+            else { 
                 if(newX - oldX == 0 || newX - oldX == 1) {
                     return true;
                 }
