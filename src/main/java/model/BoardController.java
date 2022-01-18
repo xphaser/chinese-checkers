@@ -21,22 +21,22 @@ public class BoardController {
         
         switch(player) {
         case 1:
-            oppositeTriangle = board.getGreenTriangle();
-            break;
-        case 2:
-            oppositeTriangle = board.getWhiteTriangle();
-            break;
-        case 3:
-            oppositeTriangle = board.getYellowTriangle();
-            break;
-        case 4:
-            oppositeTriangle = board.getRedTriangle();
-            break;
-        case 5:
             oppositeTriangle = board.getBlackTriangle();
             break;
-        case 6:
+        case 2:
             oppositeTriangle = board.getBlueTriangle();
+            break;
+        case 3:
+            oppositeTriangle = board.getGreenTriangle();
+            break;
+        case 4:
+            oppositeTriangle = board.getWhiteTriangle();
+            break;
+        case 5:
+            oppositeTriangle = board.getYellowTriangle();
+            break;
+        case 6:
+            oppositeTriangle = board.getRedTriangle();
             break;
         default:
             return false;
@@ -207,13 +207,47 @@ public class BoardController {
     }
     
     public int findWinner() {
-        if(redVictory()) return 1;
-        if(blackVictory()) return 2;
-        if(blueVictory()) return 3;
-        if(greenVictory()) return 4;
-        if(whiteVictory()) return 5;
-        if(yellowVictory()) return 6;
+        if(whiteVictory()) return 1;
+        if(yellowVictory()) return 2;
+        if(redVictory()) return 3;
+        if(blackVictory()) return 4;
+        if(blueVictory()) return 5;
+        if(greenVictory()) return 6;
         return 0;
+    }
+    
+    private boolean whiteVictory() {
+        int[][] oppositeTriangle = board.getBlackTriangle();
+        int counter = 0;
+        
+        for(int i=0; i<oppositeTriangle.length; i++) {
+            Piece piece = board.getPiece(oppositeTriangle[i][0], oppositeTriangle[i][1]);
+            if(piece != null && piece.getState() == 1) {
+                counter++;
+            }
+        }
+        
+        if(counter == 10) {
+            return true;
+        }
+        return false;
+    }
+    
+    private boolean yellowVictory() {
+        int[][] oppositeTriangle = board.getBlueTriangle();
+        int counter = 0;
+        
+        for(int i=0; i<oppositeTriangle.length; i++) {
+            Piece piece = board.getPiece(oppositeTriangle[i][0], oppositeTriangle[i][1]);
+            if(piece != null && piece.getState() == 2) {
+                counter++;
+            }
+        }
+        
+        if(counter == 10) {
+            return true;
+        }
+        return false;
     }
     
     private boolean redVictory() {
@@ -222,7 +256,7 @@ public class BoardController {
         
         for(int i=0; i<oppositeTriangle.length; i++) {
             Piece piece = board.getPiece(oppositeTriangle[i][0], oppositeTriangle[i][1]);
-            if(piece != null && piece.getState() == 1) {
+            if(piece != null && piece.getState() == 3) {
                 counter++;
             }
         }
@@ -239,7 +273,7 @@ public class BoardController {
         
         for(int i=0; i<oppositeTriangle.length; i++) {
             Piece piece = board.getPiece(oppositeTriangle[i][0], oppositeTriangle[i][1]);
-            if(piece != null && piece.getState() == 2) {
+            if(piece != null && piece.getState() == 4) {
                 counter++;
             }
         }
@@ -256,7 +290,7 @@ public class BoardController {
         
         for(int i=0; i<oppositeTriangle.length; i++) {
             Piece piece = board.getPiece(oppositeTriangle[i][0], oppositeTriangle[i][1]);
-            if(piece != null && piece.getState() == 3) {
+            if(piece != null && piece.getState() == 5) {
                 counter++;
             }
         }
@@ -269,40 +303,6 @@ public class BoardController {
     
     private boolean greenVictory() {
         int[][] oppositeTriangle = board.getRedTriangle();
-        int counter = 0;
-        
-        for(int i=0; i<oppositeTriangle.length; i++) {
-            Piece piece = board.getPiece(oppositeTriangle[i][0], oppositeTriangle[i][1]);
-            if(piece != null && piece.getState() == 4) {
-                counter++;
-            }
-        }
-        
-        if(counter == 10) {
-            return true;
-        }
-        return false;
-    }
-    
-    private boolean whiteVictory() {
-        int[][] oppositeTriangle = board.getBlackTriangle();
-        int counter = 0;
-        
-        for(int i=0; i<oppositeTriangle.length; i++) {
-            Piece piece = board.getPiece(oppositeTriangle[i][0], oppositeTriangle[i][1]);
-            if(piece != null && piece.getState() == 5) {
-                counter++;
-            }
-        }
-        
-        if(counter == 10) {
-            return true;
-        }
-        return false;
-    }
-    
-    private boolean yellowVictory() {
-        int[][] oppositeTriangle = board.getBlueTriangle();
         int counter = 0;
         
         for(int i=0; i<oppositeTriangle.length; i++) {

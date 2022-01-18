@@ -123,22 +123,22 @@ public class BoardControllerTest {
         
         Assert.assertTrue(controller.findWinner() == 0);
         
-        board.setPieces(board.getBlueTriangle(), 6);
+        board.setPieces(board.getRedTriangle(), 6);
         Assert.assertTrue(controller.findWinner() == 6);
         
-        board.setPieces(board.getBlackTriangle(), 5);
+        board.setPieces(board.getYellowTriangle(), 5);
         Assert.assertTrue(controller.findWinner() == 5);
         
-        board.setPieces(board.getRedTriangle(), 4);
+        board.setPieces(board.getWhiteTriangle(), 4);
         Assert.assertTrue(controller.findWinner() == 4);
         
-        board.setPieces(board.getYellowTriangle(), 3);
+        board.setPieces(board.getGreenTriangle(), 3);
         Assert.assertTrue(controller.findWinner() == 3);
         
-        board.setPieces(board.getWhiteTriangle(), 2);
+        board.setPieces(board.getBlueTriangle(), 2);
         Assert.assertTrue(controller.findWinner() == 2);
         
-        board.setPieces(board.getGreenTriangle(), 1);
+        board.setPieces(board.getBlackTriangle(), 1);
         Assert.assertTrue(controller.findWinner() == 1);
     }
 }

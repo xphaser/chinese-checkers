@@ -13,22 +13,22 @@ public class BasicBoard extends AbstractBoard {
             {0,15}, {1,15}, {2,15}, {3,15}, {4,15}, {7,15}, {8,15}, {9,15}, {10,15}, {11,15}, {12,15},
             {0,16}, {1,16}, {2,16}, {3,16}, {4,16}, {5,16}, {7,16}, {8,16}, {9,16}, {10,16}, {11,16}, {12,16}
     };
-    private static final int[][] redPieces = {
+    private static final int[][] whitePieces = {
             {6,0}, {5,1}, {6,1}, {5,2}, {6,2}, {7,2}, {4,3}, {5,3}, {6,3}, {7,3}
     };
-    private static final int[][] blackPieces = {
+    private static final int[][] yellowPieces = {
             {9,4}, {10,4}, {11,4}, {12,4}, {9,5}, {10,5}, {11,5}, {10,6}, {11,6}, {10,7}
     };
-    private static final int[][] bluePieces = {
+    private static final int[][] redPieces = {
             {10,9}, {10,10}, {11,10}, {9,11}, {10,11}, {11,11}, {9,12}, {10,12}, {11,12}, {12,12}
     };
-    private static final int[][] greenPieces = {
+    private static final int[][] blackPieces = {
             {4,13}, {5,13}, {6,13}, {7,13}, {5,14}, {6,14}, {7,14}, {5,15}, {6,15}, {6,16}
     };
-    private static final int[][] whitePieces = {
+    private static final int[][] bluePieces = {
             {1,9}, {1,10}, {2,10}, {0,11}, {1,11}, {2,11}, {0,12}, {1,12}, {2,12}, {3,12}
     };
-    private static final int[][] yellowPieces = {
+    private static final int[][] greenPieces = {
             {0,4}, {1,4}, {2,4}, {3,4}, {0,5}, {1,5}, {2,5}, {1,6}, {2,6}, {1,7}
     };
 
@@ -43,30 +43,38 @@ public class BasicBoard extends AbstractBoard {
 
     public void init(int playersNum) {
         if(playersNum == 2) {
-            this.setPieces(redPieces, 1);
-            this.setPieces(greenPieces, 4);
+            this.setPieces(whitePieces, 1);
+            this.setPieces(blackPieces, 4);
         }
         else if(playersNum == 3) {
-            this.setPieces(redPieces, 1);
-            this.setPieces(bluePieces, 3);
-            this.setPieces(whitePieces, 5);
+            this.setPieces(whitePieces, 1);
+            this.setPieces(redPieces, 3);
+            this.setPieces(bluePieces, 5);
 
 
         }
         else if(playersNum == 4) {
-            this.setPieces(blackPieces, 2);
-            this.setPieces(bluePieces, 3);
-            this.setPieces(whitePieces, 5);
-            this.setPieces(yellowPieces, 6);
+            this.setPieces(yellowPieces, 2);
+            this.setPieces(redPieces, 3);
+            this.setPieces(bluePieces, 5);
+            this.setPieces(greenPieces, 6);
         }
         else if(playersNum == 6) {
-            this.setPieces(redPieces, 1);
-            this.setPieces(blackPieces, 2);
-            this.setPieces(bluePieces, 3);
-            this.setPieces(greenPieces, 4);
-            this.setPieces(whitePieces, 5);
-            this.setPieces(yellowPieces, 6);
+            this.setPieces(whitePieces, 1);
+            this.setPieces(yellowPieces, 2);
+            this.setPieces(redPieces, 3);
+            this.setPieces(blackPieces, 4);
+            this.setPieces(bluePieces, 5);
+            this.setPieces(greenPieces, 6);
         }
+    }
+    
+    public int[][] getWhiteTriangle() {
+        return whitePieces;
+    }
+    
+    public int[][] getYellowTriangle() {
+        return yellowPieces;
     }
     
     public int[][] getRedTriangle() {
@@ -84,12 +92,5 @@ public class BasicBoard extends AbstractBoard {
     public int[][] getGreenTriangle() {
         return greenPieces;
     }
-    
-    public int[][] getYellowTriangle() {
-        return yellowPieces;
-    }
-    
-    public int[][] getWhiteTriangle() {
-        return whitePieces;
-    }
+
 }

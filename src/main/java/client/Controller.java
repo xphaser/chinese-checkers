@@ -9,7 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.Circle;
 import model.BasicBoard;
 import model.Piece;
@@ -35,7 +37,7 @@ public class Controller {
         
         new Thread(() -> {
             try {
-                client.connect(Constants.SERVER_HOST, Constants.SERVER_PORT);
+                client.connect("localhost", 3000);
                 client.run();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -81,17 +83,17 @@ public class Controller {
     private RadialGradient getColor(int id) throws IllegalArgumentException {
         switch(id) {
         case 1:
-            return Constants.COLOR_RED;
+            return new RadialGradient(-135, 0.5, 0.5, 0.5, 0.5, true, CycleMethod.NO_CYCLE, new Stop(0, Color.WHITE), new Stop(1, Color.DARKGREY));
         case 2:
-            return Constants.COLOR_BLACK;
+            return new RadialGradient(-135, 0.5, 0.5, 0.5, 0.5, true, CycleMethod.NO_CYCLE, new Stop(0, Color.WHITE), new Stop(1, Color.GOLD));
         case 3:
-            return Constants.COLOR_BLUE;
+            return new RadialGradient(-135, 0.5, 0.5, 0.5, 0.5, true, CycleMethod.NO_CYCLE, new Stop(0, Color.WHITE), new Stop(1, Color.RED));
         case 4:
-            return Constants.COLOR_GREEN;
+            return new RadialGradient(-135, 0.5, 0.5, 0.5, 0.5, true, CycleMethod.NO_CYCLE, new Stop(0, Color.LIGHTGREY), new Stop(1, Color.BLACK));
         case 5:
-            return Constants.COLOR_WHITE;
+            return new RadialGradient(-135, 0.5, 0.5, 0.5, 0.5, true, CycleMethod.NO_CYCLE, new Stop(0, Color.WHITE), new Stop(1, Color.BLUE));
         case 6:
-            return Constants.COLOR_YELLOW;
+            return new RadialGradient(-135, 0.5, 0.5, 0.5, 0.5, true, CycleMethod.NO_CYCLE, new Stop(0, Color.WHITE), new Stop(1, Color.GREEN));
         default:
             throw new IllegalArgumentException();
         }
